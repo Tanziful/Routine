@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timetable</title>
+    <link rel="stylesheet" href="Routine.css">
+    <style>
+        /* Enhanced Calendar Styles */
+        .calendar {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-bottom: 5px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .weekday {
+            padding: 5px;
+            font-size: 12px;
+        }
+        #daysContainer {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+        .day {
+            padding: 5px;
+            text-align: center;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .day:hover {
+            background-color: #f0f0f0;
+        }
+        .today {
+            background-color: #d32f2f;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Timetable -->
+        <table id="timetable">
+            <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>Session</th>
+                    <th>8:00 - 8:50</th>
+                    <th>9:00 - 9:50</th>
+                    <th>10:00 - 10:50</th>
+                    <th>11:00 - 11:50</th>
+                    <th>12:00 - 12:50</th>
+                    <th>1:00 - 1:50</th>
+                    <th>2:00 - 2:50</th>
+                    <th>3:00 - 3:50</th>
+                    <th>4:00 - 4:50</th>
+                    <th>5:00 - 5:50</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Saturday -->
+                <tr>
+                    <td rowspan="1">Saturday</td>
+                    <td>2020-2021</td>
+                    <td colspan="2">ICTE 4363 (RI)<br> Lecture Room 4001</td>
+                    <td colspan="2">ICTE 4331 (SA)<br> Lecture Room 4001</td>
+                    <td></td>
+                    <td colspan="2">ICTE 4332 (SA)<br> Lab G-1 Room 1202</td>
+                    <td colspan="2">ICTE 4332 (SA)<br> Lab G-2 Room 1202</td>
+                    <td rowspan="7"></td>
+                </tr>
+                <!-- Sunday -->
+                <tr>
+                    <td rowspan="2">Sunday</td>
+                    <td rowspan="2">2020-2021</td>
+                    <td colspan="2">ICTE 4336 (FI)<br> Lab G-1 Room 2701</td>
+                    <td colspan="2">ICTE 4364 (RI)<br> Lab G-1 Room 4701</td>
+                    <td></td>
+                    <td colspan="2" rowspan="2">ACC 4301 (RB)<br> Tutorial Room 1001</td>
+                    <td colspan="2" rowspan="2">ACC 4333 (RB)<br> Tutorial Room 1001</td>
+                </tr>
+                <tr>
+                    <td colspan="2">ICTE 4336 (FI)<br> Lab G-2 Room 2701</td>
+                    <td colspan="2">ICTE 4364 (RI)<br> Lab G-2 Room 4701</td>
+                    <td></td>
+                </tr>
+                <!-- Monday -->
+                <tr>
+                    <td rowspan="1">Monday</td>
+                    <td>2020-2021</td>
+                    <td colspan="2">ACC 4333 (RB)<br> Tutorial Room 2001</td>
+                    <td colspan="2">ICTE 4335 (FI)<br> Tutorial Room 4001</td>
+                    <td></td>
+                    <td colspan="2">ACC 4301 (RB)<br> Lecture Room 1001</td>
+                    <td colspan="2">ICTE 4335 (FI)<br> Lecture Room 4001</td>
+                </tr>
+                <!-- Tuesday -->
+                <tr>
+                    <td rowspan="1">Tuesday</td>
+                    <td>2020-2021</td>
+                    <td></td>
+                    <td colspan="2">ICTE 4335 (FI)<br> Tutorial Room 2001</td>
+                    <td></td>
+                    <td colspan="2">ICTE 4331 (SA)<br> Tutorial Room 4001</td>
+                    <td colspan="2"></td>
+                </tr>
+                <!-- Wednesday -->
+                <tr>
+                    <td rowspan="1">Wednesday</td>
+                    <td>2020-2021</td>
+                    <td colspan="9"></td>
+                </tr>
+                <!-- Thursday -->
+                <tr>
+                    <td rowspan="1">Thursday</td>
+                    <td>2020-2021</td>
+                    <td colspan="9"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Sidebar for Calendar and Clock -->
+        <div class="sidebar">
+            <div class="calendar">
+                <div class="calendar-header">
+                    <h2>Calendar</h2>
+                    <h3 id="monthYear"></h3>
+                </div>
+                <div class="weekdays">
+                    <div class="weekday">Sun</div>
+                    <div class="weekday">Mon</div>
+                    <div class="weekday">Tue</div>
+                    <div class="weekday">Wed</div>
+                    <div class="weekday">Thu</div>
+                    <div class="weekday">Fri</div>
+                    <div class="weekday">Sat</div>
+                </div>
+                <div id="daysContainer"></div>
+            </div>
+            <div class="clock" id="clock"></div>
+        </div>
+    </div>
+    <footer>
+        <b>Tanziful Islam</b><br>
+        <button id="savePdfBtn">Save as PDF</button>
+        &copy; <span id="currentYear"></span>
+    </footer>
+
+    <script>
+        // Calendar Script
+        function renderCalendar() {
+            const now = new Date();
+            const monthNames = ["January", "February", "March", "April", "May", "June", 
+                              "July", "August", "September", "October", "November", "December"];
+            const monthYear = document.getElementById("monthYear");
+            const daysContainer = document.getElementById("daysContainer");
+
+            // Set month and year
+            monthYear.textContent = `${monthNames[now.getMonth()]} ${now.getFullYear()}`;
+            daysContainer.innerHTML = '';
+
+            // Get first day of month and total days
+            const firstDay = new Date(now.getFullYear(), now.getMonth(), 1).getDay();
+            const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+            const today = now.getDate();
+
+            // Add empty cells for days before the first day of the month
+            for (let i = 0; i < firstDay; i++) {
+                const emptyDay = document.createElement("div");
+                emptyDay.classList.add("day");
+                daysContainer.appendChild(emptyDay);
+            }
+
+            // Add days of the month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayElement = document.createElement("div");
+                dayElement.classList.add("day");
+                dayElement.textContent = day;
+
+                // Highlight today
+                if (day === today) {
+                    dayElement.classList.add("today");
+                }
+
+                daysContainer.appendChild(dayElement);
+            }
+        }
+
+        // Clock Script
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit',
+                hour12: true 
+            });
+            document.getElementById('clock').textContent = timeString;
+        }
+
+        // Set current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Initialize calendar and clock
+        renderCalendar();
+        updateClock();
+        setInterval(updateClock, 1000);
+
+        // PDF Button
+        document.getElementById('savePdfBtn').addEventListener('click', function() {
+            window.print();
+        });
+    </script>
+</body>
+</html>
